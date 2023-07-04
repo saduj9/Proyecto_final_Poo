@@ -132,6 +132,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_nuevo_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-cliente.png"))); // NOI18N
         jMenu_nuevo_cliente.setText("Nuevo cliente");
         jMenu_nuevo_cliente.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_nuevo_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_nuevo_clienteActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenu_nuevo_cliente);
 
         jMenu_gestionar_cliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -308,6 +313,13 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interGestionarProducto);
         interGestionarProducto.setVisible(true);
     }//GEN-LAST:event_jMenu_gestionar_productoActionPerformed
+
+    private void jMenu_nuevo_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_nuevo_clienteActionPerformed
+        InterCliente interCliente = new InterCliente();
+        jDesktopPane_menu.add(interCliente);
+        interCliente.setVisible(true);
+        
+    }//GEN-LAST:event_jMenu_nuevo_clienteActionPerformed
 
     /**
      * @param args the command line arguments
