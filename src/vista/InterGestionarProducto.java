@@ -398,14 +398,14 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
                         fila[i] = IGV;
                         rs.getObject(i + 1);
                     } else {
-                    }
-                    fila[i] = rs.getObject(i + 1);
+                        fila[i] = rs.getObject(i + 1);
+                    }                   
                 }
                 model.addRow(fila);
             }
             con.close();
         } catch (SQLException e) {
-            System.out.println("Error al llenar la tabla categoria: " + e);
+            System.out.println("Error al llenar la tabla producto: " + e);
         }
         table_productos.addMouseListener(new MouseAdapter() {
             @Override
