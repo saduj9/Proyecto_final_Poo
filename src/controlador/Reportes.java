@@ -124,7 +124,7 @@ public class Reportes {
             tabla.addCell("Cant.");
             tabla.addCell("Precio");
             tabla.addCell("Descripcion");
-            tabla.addCell("Por. Iva");
+            tabla.addCell("%Igv");
             tabla.addCell("Categoria");
 
             try {
