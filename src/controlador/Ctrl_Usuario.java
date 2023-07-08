@@ -19,18 +19,24 @@ import modelo.Usuario;
  */
 public class Ctrl_Usuario {
    //metoodo para logearse
+    public static String usuario = "";
+    public static String rol = "";
     public boolean loginUsuario(Usuario objeto) {
         boolean respuesta = false;
 
         Connection cn = Conexion.conectar();
-        String sql = "select usuario, contraseña from tb_usuario where usuario = '"+ objeto.getUsuario() +"' and contraseña = '"+ objeto.getContraseña()+"'";
+        String sql = "select usuario, contraseña ,rol from tb_usuario where usuario = '"+ objeto.getUsuario() +"' and contraseña = '"+ objeto.getContraseña()+"'";
         Statement st;
         try {
 
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
+            
             while (rs.next()) {
-                respuesta = true;
+               usuario = rs.getString("usuario");              
+               rol = rs.getString("rol");
+               //System.out.println("Error al Iniciar Sesion"+rol);
+               respuesta = true;
             }
         } catch (SQLException e) {
             System.out.println("Error al Iniciar Sesion");
@@ -38,6 +44,7 @@ public class Ctrl_Usuario {
         }
         return respuesta;
     }
+    
     
     public boolean guardar(Usuario objeto) {
         boolean respuesta = false;

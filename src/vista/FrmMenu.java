@@ -1,6 +1,10 @@
 package vista;
 
+import controlador.Ctrl_Usuario;
+import controlador.Reportes;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 
 /**
@@ -19,11 +23,42 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setTitle("Sistema de ventas");
         this.setLayout(null);
         jDesktopPane_menu = new JDesktopPane();
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+        String rolLog = controlUsuario.rol;
+        jMenu_gestionar_venta.setVisible(false);
+        if(rolLog.equals("Administrador")){
+            jMenu1.setVisible(true);
+            jMenu2.setVisible(true);
+            jMenu3.setVisible(true);
+            jMenu4.setVisible(true);
+            jMenu5.setVisible(true);
+            jMenu6.setVisible(true);
+            jMenu7.setVisible(true);
+            jMenu8.setVisible(true);
+            rolLog.equals("");
+        }else{
+            jMenu1.setVisible(false);
+            jMenu2.setVisible(false);
+            jMenu3.setVisible(true);
+            jMenu4.setVisible(false);
+            jMenu5.setVisible(true);
+            jMenu6.setVisible(false);
+            jMenu7.setVisible(false);
+            jMenu8.setVisible(true);
+            rolLog.equals("");
+        }
+       
 
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         this.jDesktopPane_menu.setBounds(0, 0, ancho, (alto - 110));
         this.add(jDesktopPane_menu);
+    }
+
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("img/ventas.png"));
+        return retValue;
     }
 
     /**
@@ -63,6 +98,7 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_cerrar_sesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         jMenu1.setText("Usuario");
@@ -228,6 +264,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_reporte_clientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reporte1.png"))); // NOI18N
         jMenu_reporte_clientes.setText("Reportes Clientes");
         jMenu_reporte_clientes.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_reporte_clientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_reporte_clientesActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenu_reporte_clientes);
 
         jMenu_reporte_categorias.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -245,12 +286,22 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_reporte_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reporte1.png"))); // NOI18N
         jMenu_reporte_productos.setText("Reportes Productos");
         jMenu_reporte_productos.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_reporte_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_reporte_productosActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenu_reporte_productos);
 
         jMenu_reporte_ventas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jMenu_reporte_ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reporte1.png"))); // NOI18N
         jMenu_reporte_ventas.setText("Reportes Ventas");
         jMenu_reporte_ventas.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_reporte_ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_reporte_ventasActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenu_reporte_ventas);
 
         jMenuBar1.add(jMenu6);
@@ -264,6 +315,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_ver_historial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/historial1.png"))); // NOI18N
         jMenu_ver_historial.setText("Ver Historial");
         jMenu_ver_historial.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_ver_historial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_ver_historialActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenu_ver_historial);
 
         jMenuBar1.add(jMenu7);
@@ -309,11 +365,14 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_nuevo_usuarioActionPerformed
 
     private void jMenu_gestionar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_gestionar_ventaActionPerformed
-        // TODO add your handling code here:
+        InterGestionarVentas interGestionarVentas = new InterGestionarVentas();
+        jDesktopPane_menu.add(interGestionarVentas);
+        interGestionarVentas.setVisible(true);
     }//GEN-LAST:event_jMenu_gestionar_ventaActionPerformed
 
     private void jMenu_reporte_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_reporte_categoriasActionPerformed
-        // TODO add your handling code here:
+        Reportes reporte = new Reportes();
+        reporte.ReportesCategorias();
     }//GEN-LAST:event_jMenu_reporte_categoriasActionPerformed
 
     private void jMenu_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_nueva_categoriaActionPerformed
@@ -376,6 +435,27 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interFacturacion);
         interFacturacion.setVisible(true);
     }//GEN-LAST:event_jMenu_nueva_ventaActionPerformed
+
+    private void jMenu_reporte_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_reporte_clientesActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesClientes();
+    }//GEN-LAST:event_jMenu_reporte_clientesActionPerformed
+
+    private void jMenu_reporte_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_reporte_productosActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesProductos();
+    }//GEN-LAST:event_jMenu_reporte_productosActionPerformed
+
+    private void jMenu_reporte_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_reporte_ventasActionPerformed
+        Reportes reporte = new Reportes();
+        reporte.ReportesVentas();
+    }//GEN-LAST:event_jMenu_reporte_ventasActionPerformed
+
+    private void jMenu_ver_historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ver_historialActionPerformed
+        InterGraficas interGraficas = new InterGraficas();
+        jDesktopPane_menu.add(interGraficas);
+        interGraficas.setVisible(true);
+    }//GEN-LAST:event_jMenu_ver_historialActionPerformed
 
     /**
      * @param args the command line arguments
