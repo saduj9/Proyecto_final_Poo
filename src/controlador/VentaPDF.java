@@ -6,6 +6,18 @@ package controlador;
 
 
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import conexion.Conexion;
 import java.awt.Desktop;
 import java.io.File;
@@ -42,10 +54,10 @@ public class VentaPDF {
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                nombreCliente = rs.getString("nombre") + " " + rs.getString("apellido");
-                cedulaCliente = rs.getString("cedula");
-                telefonoCliente = rs.getString("telefono");
-                direccionCliente = rs.getString("direccion");
+                nombreCliente = rs.getString("nombre_cliente") + " " + rs.getString("apellido_cliente");
+                cedulaCliente = rs.getString("dni_cliente");
+                telefonoCliente = rs.getString("telefono_cliente");
+                direccionCliente = rs.getString("direccion_cliente");
             }
             cn.close();
         } catch (SQLException e) {
@@ -53,8 +65,8 @@ public class VentaPDF {
         }
     }
     
-    public void generarFacturaPDF() {
-        /*try {
+    public void generarFacturaPDF(String tipo) {
+        try {
 
             //cargar la fecha actual
             Date date = new Date();
@@ -81,7 +93,7 @@ public class VentaPDF {
             Paragraph fecha = new Paragraph();
             Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
             fecha.add(Chunk.NEWLINE); //agregar nueva linea
-            fecha.add("Factura: 001" + "\nFecha: " + fechaActual + "\n\n");
+            fecha.add(tipo + "\nFecha: " + fechaActual + "\n\n");
 
             PdfPTable Encabezado = new PdfPTable(4);
             Encabezado.setWidthPercentage(100);
@@ -93,14 +105,15 @@ public class VentaPDF {
             //agregar celdas
             Encabezado.addCell(img);
 
-            String ruc = "0987654321001";
-            String nombre = "Fantasma Cooporation";
-            String telefono = "0987654321";
-            String direccion = "Tamarindo City";
-            String razon = "La magia de la programacion, esta en el poder de tu imaginacion";
+            String ruc = "10475212211";
+            String nombre = "La Tiendita de Mapu";
+            String telefono = "969428242";
+            String direccion = "Los olvidados de san juan de miraflores";
+            String razon = "La Tiendita de Mapu SAC";
+            String lema = "Si eres chabacano no entras";
 
             Encabezado.addCell("");//celda vacia
-            Encabezado.addCell("RUC: " + ruc + "\nNOMBRE: " + nombre + "\nTELEFONO: " + telefono + "\nDIRECCION: " + direccion + "\nRAZON SOCIAL: " + razon);
+            Encabezado.addCell("RUC: " + ruc + "\nNOMBRE: " + nombre + "\nTELEFONO: " + telefono + "\nDIRECCION: " + direccion + "\nRAZON SOCIAL: " + razon + "\nLema: " + lema);
             Encabezado.addCell(fecha);
             doc.add(Encabezado);
 
@@ -196,13 +209,7 @@ public class VentaPDF {
             info.setAlignment(Element.ALIGN_RIGHT);
             doc.add(info);
             
-            //Firma
-           Paragraph firma = new Paragraph();
-           firma.add(Chunk.NEWLINE);
-           firma.add("Cancelacion y firma\n\n");
-           firma.add("_______________________");
-           firma.setAlignment(Element.ALIGN_CENTER);
-           doc.add(firma);
+           
            
             //Mensaje
            Paragraph mensaje = new Paragraph();
@@ -221,7 +228,7 @@ public class VentaPDF {
             
         } catch (DocumentException | IOException e) {
             System.out.println("Error en: " + e);
-        }*/
+        }
     }
     
 }

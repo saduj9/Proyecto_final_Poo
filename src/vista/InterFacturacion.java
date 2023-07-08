@@ -32,7 +32,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private DetalleVenta producto;
 
     private int idCliente = 0;//id del cliente sleccionado
-
+    private int ultimoId = 0;
     private int idProducto = 0;
     private String nombre = "";
     private int cantidadProductoBBDD = 0;
@@ -149,6 +149,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         txt_cambio = new javax.swing.JTextField();
         jButton_calcular_cambio = new javax.swing.JButton();
         jButton_RegistrarVenta = new javax.swing.JButton();
+        jButton_RegistrarVenta1 = new javax.swing.JButton();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -157,8 +158,8 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Facturación");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, -1, -1));
+        jLabel1.setText("Registro de venta");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -255,7 +256,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel10.setText("Cambio:");
+        jLabel10.setText("Vuelto:");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
         txt_subtotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -283,7 +284,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
         jButton_calcular_cambio.setBackground(new java.awt.Color(51, 255, 255));
         jButton_calcular_cambio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton_calcular_cambio.setText("Calcular Cambio");
+        jButton_calcular_cambio.setText("Calcular Vuelto");
         jButton_calcular_cambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_calcular_cambioActionPerformed(evt);
@@ -295,7 +296,8 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
         jButton_RegistrarVenta.setBackground(new java.awt.Color(51, 255, 255));
         jButton_RegistrarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton_RegistrarVenta.setText("Registrar Venta");
+        jButton_RegistrarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/impresora.png"))); // NOI18N
+        jButton_RegistrarVenta.setText("Registrar Factura");
         jButton_RegistrarVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_RegistrarVenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_RegistrarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -303,7 +305,20 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 jButton_RegistrarVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 170, 100));
+        getContentPane().add(jButton_RegistrarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 170, 100));
+
+        jButton_RegistrarVenta1.setBackground(new java.awt.Color(51, 255, 255));
+        jButton_RegistrarVenta1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton_RegistrarVenta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/impresora.png"))); // NOI18N
+        jButton_RegistrarVenta1.setText("Registrar Boleta");
+        jButton_RegistrarVenta1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_RegistrarVenta1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_RegistrarVenta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RegistrarVenta1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_RegistrarVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 170, 100));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 570));
 
         pack();
@@ -472,11 +487,13 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
 
                 if (controlVenta.guardar(cabeceraVenta)) {
                     JOptionPane.showMessageDialog(null, "¡Venta Registrada!");
+                    this.ObtenerUltimoId();
 
+                    String tipo = "Factura: 00" + ultimoId;
                     //Generar la factura de venta
                     VentaPDF pdf = new VentaPDF();
                     pdf.DatosCliente(idCliente);
-                    pdf.generarFacturaPDF();
+                    pdf.generarFacturaPDF(tipo);
 
                     //guardar detalle
                     for (DetalleVenta elemento : listaProductos) {
@@ -524,9 +541,87 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton_RegistrarVentaActionPerformed
 
+    private void jButton_RegistrarVenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarVenta1ActionPerformed
+        CabeceraVenta cabeceraVenta = new CabeceraVenta();
+        DetalleVenta detalleVenta = new DetalleVenta();
+        Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
+
+        String fechaActual = "";
+        Date date = new Date();
+        fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
+
+        if (!jComboBox_cliente.getSelectedItem().equals("Seleccione cliente:")) {
+            if (listaProductos.size() > 0) {
+
+                //metodo para obtener el id del cliente
+                this.ObtenerIdCliente();
+                //registrar cabecera
+                cabeceraVenta.setIdCabeceraventa(0);
+                cabeceraVenta.setIdCliente(idCliente);
+                cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
+                cabeceraVenta.setFechaVenta(fechaActual);
+                cabeceraVenta.setEstado(1);
+
+                if (controlVenta.guardar(cabeceraVenta)) {
+                    JOptionPane.showMessageDialog(null, "¡Venta Registrada!");
+                    this.ObtenerUltimoId();
+
+                    String tipo = "Boleta: 00" + ultimoId;
+                    //Generar la factura de venta
+                    VentaPDF pdf = new VentaPDF();
+                    pdf.DatosCliente(idCliente);
+                    pdf.generarFacturaPDF(tipo);
+
+                    //guardar detalle
+                    for (DetalleVenta elemento : listaProductos) {
+                        detalleVenta.setIdDetalleVenta(0);
+                        detalleVenta.setIdCabeceraVenta(0);
+                        detalleVenta.setIdProducto(elemento.getIdProducto());
+                        detalleVenta.setCantidad(elemento.getCantidad());
+                        detalleVenta.setPrecioUnitario(elemento.getPrecioUnitario());
+                        detalleVenta.setSubTotal(elemento.getSubTotal());
+                        detalleVenta.setDescuento(elemento.getDescuento());
+                        detalleVenta.setIgv(elemento.getIgv());
+                        detalleVenta.setTotalPagar(elemento.getTotalPagar());
+                        detalleVenta.setEstado(1);
+
+                        if (controlVenta.guardarDetalle(detalleVenta)) {
+                            //System.out.println("Detalle de Venta Registrado");
+
+                            txt_subtotal.setText("0.0");
+                            txt_igv.setText("0.0");
+                            txt_descuento.setText("0.0");
+                            txt_total_pagar.setText("0.0");
+                            txt_efectivo.setText("");
+                            txt_cambio.setText("0.0");
+                            auxIdDetalle = 1;
+
+                            this.CargarComboClientes();
+                            this.RestarStockProductos(elemento.getIdProducto(), elemento.getCantidad());
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "¡Error al guardar detalle de venta!");
+                        }
+                    }
+                    //vaciamos la lista
+                    listaProductos.clear();
+                    listaTablaProductos();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Error al guardar cabecera de venta!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Seleccione un producto!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Seleccione un cliente!");
+        }
+    }//GEN-LAST:event_jButton_RegistrarVenta1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_RegistrarVenta;
+    private javax.swing.JButton jButton_RegistrarVenta1;
     private javax.swing.JButton jButton_añadir_producto;
     private javax.swing.JButton jButton_busca_cliente;
     private javax.swing.JButton jButton_calcular_cambio;
@@ -542,7 +637,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_wallpaper;
-    private javax.swing.JPanel jPanel1;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable_productos;
@@ -634,7 +729,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 cantidadProductoBBDD = rs.getInt("cantidad");
                 precioUnitario = rs.getDouble("precio");
                 porcentajeIgv = rs.getInt("porcentaje_igv");
-                this.CalcularIva(precioUnitario, porcentajeIgv);//calcula y retorna el iva
+                this.CalcularIgv(precioUnitario, porcentajeIgv);
             }
 
         } catch (SQLException e) {
@@ -642,10 +737,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         }
     }
 
-    /*
-        Metodo para calcular iva
-     */
-    private double CalcularIva(double precio, int porcentajeIgv) {
+    private double CalcularIgv(double precio, int porcentajeIgv) {
         int p_igv = porcentajeIgv;
 
         switch (p_igv) {
@@ -738,5 +830,22 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.println("Error al restar cantidad 2, " + e);
         }
+    }
+
+    private void ObtenerUltimoId() {
+        try {
+            String sql = "SELECT MAX(idCabeceraVenta) AS id FROM tb_cabecera_venta;";
+            Connection cn = Conexion.conectar();
+            Statement st;
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                ultimoId = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ultimo id, " + e);
+        }
+
     }
 }
