@@ -16,6 +16,7 @@ public class Usuario {
     private String apellido;
     private String usuario;
     private String contraseña;
+    private String rol;
     private String telefono;
     private int estado;
     
@@ -26,8 +27,17 @@ public class Usuario {
         this.apellido = "";
         this.usuario = "";
         this.contraseña = "";
+        this.rol = "";
         this.telefono = "";
         this.estado = 0;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
     //get and set
     public int getIdUsuario() {

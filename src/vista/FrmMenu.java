@@ -1,4 +1,3 @@
-
 package vista;
 
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import javax.swing.JDesktopPane;
 public class FrmMenu extends javax.swing.JFrame {
 
     public static JDesktopPane jDesktopPane_menu;
+
     public FrmMenu() {
         initComponents();
         this.setSize(new Dimension(1200, 700));
@@ -19,7 +19,7 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setTitle("Sistema de ventas");
         this.setLayout(null);
         jDesktopPane_menu = new JDesktopPane();
-        
+
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         this.jDesktopPane_menu.setBounds(0, 0, ancho, (alto - 110));
@@ -84,6 +84,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_gestionar_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/configuraciones.png"))); // NOI18N
         jMenu_gestionar_usuario.setText("Gestionar Usuario");
         jMenu_gestionar_usuario.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_gestionar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_gestionar_usuarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenu_gestionar_usuario);
 
         jMenuBar1.add(jMenu1);
@@ -119,6 +124,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_actualizar_stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
         jMenu_actualizar_stock.setText("Actualizar Stock");
         jMenu_actualizar_stock.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_actualizar_stock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_actualizar_stockActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenu_actualizar_stock);
 
         jMenuBar1.add(jMenu2);
@@ -189,6 +199,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_nueva_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/anadir.png"))); // NOI18N
         jMenu_nueva_venta.setText("Nueva Venta");
         jMenu_nueva_venta.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_nueva_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_nueva_ventaActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenu_nueva_venta);
 
         jMenu_gestionar_venta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -262,6 +277,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu_cerrar_sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion.png"))); // NOI18N
         jMenu_cerrar_sesion.setText("Cerrar Sesión");
         jMenu_cerrar_sesion.setPreferredSize(new java.awt.Dimension(180, 30));
+        jMenu_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_cerrar_sesionActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenu_cerrar_sesion);
 
         jMenuBar1.add(jMenu8);
@@ -283,7 +303,9 @@ public class FrmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu_nuevo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_nuevo_usuarioActionPerformed
-        // TODO add your handling code here:
+        InterUsuario interUsuario = new InterUsuario();
+        jDesktopPane_menu.add(interUsuario);
+        interUsuario.setVisible(true);
     }//GEN-LAST:event_jMenu_nuevo_usuarioActionPerformed
 
     private void jMenu_gestionar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_gestionar_ventaActionPerformed
@@ -296,9 +318,9 @@ public class FrmMenu extends javax.swing.JFrame {
 
     private void jMenu_nueva_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_nueva_categoriaActionPerformed
         InterCategoria interCategoria = new InterCategoria();
-        jDesktopPane_menu.add(interCategoria );
+        jDesktopPane_menu.add(interCategoria);
         interCategoria.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenu_nueva_categoriaActionPerformed
 
     private void jMenu_gestionar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_gestionar_categoriaActionPerformed
@@ -323,7 +345,7 @@ public class FrmMenu extends javax.swing.JFrame {
         InterCliente interCliente = new InterCliente();
         jDesktopPane_menu.add(interCliente);
         interCliente.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenu_nuevo_clienteActionPerformed
 
     private void jMenu_gestionar_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_gestionar_clienteActionPerformed
@@ -332,6 +354,28 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interGestionarCliente);
         interGestionarCliente.setVisible(true);
     }//GEN-LAST:event_jMenu_gestionar_clienteActionPerformed
+
+    private void jMenu_actualizar_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_actualizar_stockActionPerformed
+        InterActualizarStock interActualizarStock = new InterActualizarStock();
+        jDesktopPane_menu.add(interActualizarStock);
+        interActualizarStock.setVisible(true);
+    }//GEN-LAST:event_jMenu_actualizar_stockActionPerformed
+
+    private void jMenu_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_cerrar_sesionActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenu_cerrar_sesionActionPerformed
+
+    private void jMenu_gestionar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_gestionar_usuarioActionPerformed
+        InterGestionarUsuario interGestionarUsuario = new InterGestionarUsuario();
+        jDesktopPane_menu.add(interGestionarUsuario);
+        interGestionarUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenu_gestionar_usuarioActionPerformed
+
+    private void jMenu_nueva_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_nueva_ventaActionPerformed
+        InterFacturacion interFacturacion = new InterFacturacion();
+        jDesktopPane_menu.add(interFacturacion);
+        interFacturacion.setVisible(true);
+    }//GEN-LAST:event_jMenu_nueva_ventaActionPerformed
 
     /**
      * @param args the command line arguments
