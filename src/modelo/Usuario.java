@@ -32,6 +32,17 @@ public class Usuario {
         this.estado = 0;
     }
 
+    public Usuario(int idUsuario, String nombre, String apellido, String usuario, String contraseña, String rol, String telefono, int estado) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+        this.rol = rol;
+        this.telefono = telefono;
+        this.estado = estado;
+    }
+
     public String getRol() {
         return rol;
     }

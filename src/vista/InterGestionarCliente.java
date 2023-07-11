@@ -6,6 +6,8 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_Cliente;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -18,6 +20,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
 
@@ -189,7 +192,14 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
             
             cliente.setNombre_cliente(txt_nombre.getText().trim());
             cliente.setApellido_cliente(txt_apellido.getText().trim());
-            cliente.setDni_cliente(txt_dni.getText().trim());
+            /*Validar Campo DNI*/
+            
+            String dni=txt_dni.getText().trim();    
+            if(validarCampo(dni, 8)){
+            cliente.setDni_cliente(dni);
+            
+            /*Validar Campo Telefono*/
+            if(validarCampo(txt_telefono.getText().trim(), 9)){
             cliente.setTelefono_cliente(txt_telefono.getText().trim());
             cliente.setDireccion_cliente(txt_direccion.getText().trim());
             if(controlCliente.actualizar(cliente, idCliente)){
@@ -199,6 +209,14 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
             }else{
                 JOptionPane.showMessageDialog(null, "Error al actualizar");
             }
+            }else{
+                JOptionPane.showMessageDialog(null, "El dato telefono esta incorrecto");
+                txt_telefono.setBackground(Color.red);
+            }
+            }else{
+                JOptionPane.showMessageDialog(null, "El dato dni esta incorrecto");
+                txt_dni.setBackground(Color.red);
+            } 
         }
             
     }//GEN-LAST:event_btn_actualizarActionPerformed
@@ -250,6 +268,12 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
         txt_apellido.setText("");
         txt_dni.setText("");
         txt_direccion.setText("");
+        
+        txt_nombre.setBackground(Color.white);
+        txt_apellido.setBackground(Color.white);
+        txt_dni.setBackground(Color.white);
+        txt_telefono.setBackground(Color.white);
+        txt_direccion.setBackground(Color.white);
     }
 
   
@@ -273,6 +297,26 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
             model.addColumn("Telefono");
             model.addColumn("Direccion");
             model.addColumn("Estado");
+            
+            //Codigo Juan
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer(){
+                
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+                if (value instanceof Integer){
+                int estado = (Integer) value;
+                if (estado == 1){
+                    value = "Activado";
+                }else {
+                     value = "Desactivado";
+                }
+            }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+            };
+            
+            // Asignar el renderer personalizado a la columna "estado"
+            InterGestionarCliente.table_clientes.getColumnModel().getColumn(6).setCellRenderer(renderer);
+            // Fin de Codigo de Juan
 
             while (rs.next()) {       
                 Object fila[] = new Object[7];
@@ -321,5 +365,15 @@ public class InterGestionarCliente extends javax.swing.JInternalFrame {
         }
     }
 
+    /*Codigo implementado por Juan*/
+    public static boolean validarCampo(String dato, int n) {
+        if (dato.length() == n && dato.matches("\\d+")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /*Fin de codigo implementado por Juan*/
+    
   
 }

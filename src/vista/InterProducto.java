@@ -114,7 +114,7 @@ public class InterProducto extends javax.swing.JInternalFrame {
         getContentPane().add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 170, -1));
 
         jComboBox_igv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_igv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IGV:", "Sin IGV", "18%" }));
+        jComboBox_igv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "18%" }));
         jComboBox_igv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_igvActionPerformed(evt);
