@@ -30,9 +30,9 @@ public class Ctrl_RegistrarVenta {
             consulta.setInt(1, 0);//id
             consulta.setInt(2, objeto.getIdCliente());
             consulta.setInt(3, objeto.getIdUsuario());
-            consulta.setDouble(3, objeto.getValorPagar());
-            consulta.setString(4, objeto.getFechaVenta());
-            consulta.setInt(5, objeto.getEstado());
+            consulta.setDouble(4, objeto.getValorPagar());
+            consulta.setString(5, objeto.getFechaVenta());
+            consulta.setInt(6, objeto.getEstado());
             
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;

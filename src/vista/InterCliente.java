@@ -129,8 +129,8 @@ public class InterCliente extends javax.swing.JInternalFrame {
         String telefono_cliente= txt_telefono.getText().trim();
         String direccion_cliente= txt_direccion.getText().trim();
         
-
         if (!txt_nombre.getText().isEmpty() && !txt_apellido.getText().isEmpty() && !txt_dni.getText().isEmpty()) {
+            //JOptionPane.showMessageDialog(null, "Correcto");
             if (!controlCliente.existeCliente(txt_dni.getText().trim())) {
                 
                 cliente.setNombre_cliente(txt_nombre.getText().trim());

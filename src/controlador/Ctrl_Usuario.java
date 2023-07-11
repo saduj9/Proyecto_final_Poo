@@ -19,13 +19,14 @@ import modelo.Usuario;
  */
 public class Ctrl_Usuario {
    //metoodo para logearse
+    public static int idUsuarioLogeado = 0;
     public static String usuario = "";
     public static String rol = "";
     public boolean loginUsuario(Usuario objeto) {
         boolean respuesta = false;
 
         Connection cn = Conexion.conectar();
-        String sql = "select usuario, contraseña ,rol from tb_usuario where usuario = '"+ objeto.getUsuario() +"' and contraseña = '"+ objeto.getContraseña()+"'";
+        String sql = "select usuario, contraseña ,rol, idUsuario from tb_usuario where usuario = '"+ objeto.getUsuario() +"' and contraseña = '"+ objeto.getContraseña()+"' and estado = 1";
         Statement st;
         try {
 
@@ -33,6 +34,7 @@ public class Ctrl_Usuario {
             ResultSet rs = st.executeQuery(sql);
             
             while (rs.next()) {
+               idUsuarioLogeado = rs.getInt("idUsuario");
                usuario = rs.getString("usuario");              
                rol = rs.getString("rol");
                //System.out.println("Error al Iniciar Sesion"+rol);

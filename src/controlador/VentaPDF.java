@@ -37,6 +37,7 @@ import vista.InterFacturacion;
 public class VentaPDF {
     
     private String nombreCliente;
+    private String nombreUsuario;
     private String cedulaCliente;
     private String telefonoCliente;
     private String direccionCliente;
@@ -62,6 +63,22 @@ public class VentaPDF {
             cn.close();
         } catch (SQLException e) {
             System.out.println("Error al obtener datos del cliente: " + e);
+        }
+    }
+    public void DatosUsuario(int idUsuario) {
+        Connection cn = Conexion.conectar();
+        String sql = "select * from tb_usuario where idUsuario = '" + idUsuario + "'";
+        Statement st;
+        try {
+
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nombreUsuario = rs.getString("nombre") + " " + rs.getString("apellido");
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener datos del usuario: " + e);
         }
     }
     
@@ -118,6 +135,38 @@ public class VentaPDF {
             doc.add(Encabezado);
 
             //CUERPO
+            Paragraph usuario = new Paragraph();
+            usuario.add(Chunk.NEWLINE);//nueva linea
+            usuario.add("Datos del vendedor: " + "\n\n");
+            doc.add(usuario);
+            
+            PdfPTable tablaUsuario = new PdfPTable(4);
+            tablaUsuario.setWidthPercentage(100);
+            tablaUsuario.getDefaultCell().setBorder(0);//quitar bordes*/
+            
+            float[] ColumnaUsuario = new float[]{25f, 45f, 30f, 40f};
+            tablaUsuario.setWidths(ColumnaUsuario);
+            tablaUsuario.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell usuario1 = new PdfPCell(new Phrase("Nombre: ", negrita));
+            PdfPCell usuario2 = new PdfPCell(new Phrase("", negrita));
+            PdfPCell usuario3 = new PdfPCell(new Phrase("", negrita));
+            PdfPCell usuario4 = new PdfPCell(new Phrase("", negrita));
+            usuario1.setBorder(0);
+            usuario2.setBorder(0);
+            usuario3.setBorder(0);
+            usuario4.setBorder(0);
+            tablaUsuario.addCell(usuario1);
+            tablaUsuario.addCell(usuario2);
+            tablaUsuario.addCell(usuario3);
+            tablaUsuario.addCell(usuario4);
+            tablaUsuario.addCell(nombreUsuario);
+            tablaUsuario.addCell("");
+            tablaUsuario.addCell("");
+            tablaUsuario.addCell("");
+            doc.add(tablaUsuario);
+
+
+            
             Paragraph cliente = new Paragraph();
             cliente.add(Chunk.NEWLINE);//nueva linea
             cliente.add("Datos del cliente: " + "\n\n");

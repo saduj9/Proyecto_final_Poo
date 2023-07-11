@@ -2,6 +2,7 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_RegistrarVenta;
+import controlador.Ctrl_Usuario;
 import controlador.VentaPDF;
 import java.awt.Dimension;
 import static java.awt.image.ImageObserver.WIDTH;
@@ -468,6 +469,8 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         CabeceraVenta cabeceraVenta = new CabeceraVenta();
         DetalleVenta detalleVenta = new DetalleVenta();
         Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+        int idUsuarioLog = controlUsuario.idUsuarioLogeado;
 
         String fechaActual = "";
         Date date = new Date();
@@ -481,6 +484,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 //registrar cabecera
                 cabeceraVenta.setIdCabeceraventa(0);
                 cabeceraVenta.setIdCliente(idCliente);
+                cabeceraVenta.setIdUsuario(idUsuarioLog);
                 cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
                 cabeceraVenta.setFechaVenta(fechaActual);
                 cabeceraVenta.setEstado(1);
@@ -492,7 +496,8 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                     String tipo = "Factura: 00" + ultimoId;
                     //Generar la factura de venta
                     VentaPDF pdf = new VentaPDF();
-                    pdf.DatosCliente(idCliente);
+                    pdf.DatosUsuario(idUsuarioLog);
+                    pdf.DatosCliente(idCliente);                   
                     pdf.generarFacturaPDF(tipo);
 
                     //guardar detalle
@@ -546,6 +551,9 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
         DetalleVenta detalleVenta = new DetalleVenta();
         Ctrl_RegistrarVenta controlVenta = new Ctrl_RegistrarVenta();
 
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+        int idUsuarioLog = controlUsuario.idUsuarioLogeado;
+
         String fechaActual = "";
         Date date = new Date();
         fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
@@ -558,6 +566,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                 //registrar cabecera
                 cabeceraVenta.setIdCabeceraventa(0);
                 cabeceraVenta.setIdCliente(idCliente);
+                cabeceraVenta.setIdUsuario(idUsuarioLog);
                 cabeceraVenta.setValorPagar(Double.parseDouble(txt_total_pagar.getText()));
                 cabeceraVenta.setFechaVenta(fechaActual);
                 cabeceraVenta.setEstado(1);
@@ -569,6 +578,7 @@ public class InterFacturacion extends javax.swing.JInternalFrame {
                     String tipo = "Boleta: 00" + ultimoId;
                     //Generar la factura de venta
                     VentaPDF pdf = new VentaPDF();
+                    pdf.DatosUsuario(idUsuarioLog);
                     pdf.DatosCliente(idCliente);
                     pdf.generarFacturaPDF(tipo);
 

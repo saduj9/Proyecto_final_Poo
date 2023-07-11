@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 import controlador.Ctrl_Usuario;
@@ -17,9 +13,6 @@ import modelo.Usuario;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmLogin
-     */
     public FrmLogin() {
         initComponents();
         this.setResizable(false);
@@ -259,7 +252,24 @@ public class FrmLogin extends javax.swing.JFrame {
         });
     }
 
-    private void Login(){
+   
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_IniciarSesion;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField txt_contraseña;
+    private javax.swing.JTextField txt_usuario;
+    // End of variables declaration//GEN-END:variables
+
+    
+     private void Login(){
         if(!txt_usuario.getText().isEmpty() && !txt_contraseña.getText().isEmpty()){
             Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
             Usuario usuario = new Usuario();
@@ -278,18 +288,5 @@ public class FrmLogin extends javax.swing.JFrame {
             
         }
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_IniciarSesion;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JPasswordField txt_contraseña;
-    private javax.swing.JTextField txt_usuario;
-    // End of variables declaration//GEN-END:variables
+
 }

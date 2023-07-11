@@ -8,7 +8,6 @@ import controlador.Ctrl_Producto;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
