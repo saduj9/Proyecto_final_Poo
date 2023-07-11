@@ -118,4 +118,20 @@ public class Ctrl_Producto {
         }
         return respuesta;
     }
+    
+    public boolean eliminarPorCategoria(int idCategoría) {
+        boolean respuesta = false;
+        Connection cn = conexion.Conexion.conectar();
+        try {
+            PreparedStatement consulta = cn.prepareStatement("UPDATE tb_producto SET estado = '0' WHERE idCategoria ='" + idCategoría +"' AND idProducto NOT IN (SELECT idProducto FROM ( SELECT idProducto FROM tb_producto WHERE idCategoria <> "+ idCategoría +" ) AS subconsulta)");
+            
+            if (consulta.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la producto" + e);
+        }
+        return respuesta;
+    }
 }

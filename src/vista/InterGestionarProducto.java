@@ -7,6 +7,7 @@ package vista;
 import conexion.Conexion;
 import controlador.Ctrl_Categoria;
 import controlador.Ctrl_Producto;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -20,6 +21,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Producto;
@@ -184,7 +186,7 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
         jPanel3.add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 170, -1));
 
         jComboBox_igv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_igv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione IGV:", "Sin IGV", "18%" }));
+        jComboBox_igv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "18%" }));
         jComboBox_igv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_igvActionPerformed(evt);
@@ -385,6 +387,26 @@ public class InterGestionarProducto extends javax.swing.JInternalFrame {
             model.addColumn("IGV");
             model.addColumn("categoria");
             model.addColumn("estado");
+            
+            //Codigo Juan
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer(){
+                
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+                if (value instanceof Integer){
+                int estado = (Integer) value;
+                if (estado == 1){
+                    value = "Activado";
+                }else {
+                     value = "Desactivado";
+                }
+            }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+            };
+            
+            // Asignar el renderer personalizado a la columna "estado"
+            InterGestionarProducto.table_productos.getColumnModel().getColumn(7).setCellRenderer(renderer);
+            // Fin de Codigo de Juan
 
             while (rs.next()) {
 

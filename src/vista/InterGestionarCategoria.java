@@ -5,6 +5,7 @@
 package vista;
 import conexion.Conexion;
 import controlador.Ctrl_Categoria;
+import controlador.Ctrl_Producto;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
+import modelo.Producto;
 
 /**
  *
@@ -152,15 +154,38 @@ public class InterGestionarCategoria extends javax.swing.JInternalFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         if(!txt_descripcion.getText().isEmpty()){
             Categoria categoria = new Categoria();
+            Producto producto = new Producto();
             Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
+            Ctrl_Producto controlProducto = new Ctrl_Producto();
             
-            categoria.setDescripcion(txt_descripcion.getText().trim());
-            if(controlCategoria.eliminar(idCategoria)){
-                JOptionPane.showMessageDialog(null, "Categoría eliminada");
-                txt_descripcion.setText("");
-                this.CargarTablaCategorias();
+            if(controlCategoria.existeProductoporCategoría(idCategoria)){
+                
+                int opcion = JOptionPane.showConfirmDialog(null, "Esta Categoría tiene productos relacionado. ¿Seguro que quieres eliminarlo?");
+                if (opcion == JOptionPane.YES_OPTION) {
+                    System.out.println("Guardar cambios");
+                    
+                    if(controlProducto.eliminarPorCategoria(idCategoria)){
+                        JOptionPane.showMessageDialog(null, "Los productos de la categoria fueron eliminados");
+                        categoria.setDescripcion(txt_descripcion.getText().trim());
+                        if (controlCategoria.eliminar(idCategoria)) {
+                            JOptionPane.showMessageDialog(null, "Categoría eliminada");
+                            txt_descripcion.setText("");
+                            this.CargarTablaCategorias();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al eliminar categoría");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Error al eliminar categoría");
+                    }
+                } else if (opcion == JOptionPane.NO_OPTION) {
+                    System.out.println("No guardar cambios");
+                } else if (opcion == JOptionPane.CANCEL_OPTION) {
+                    System.out.println("Cancelar");
+                } else {
+                    System.out.println("Cuadro de diálogo cerrado sin selección");
+                }   
             }else{
-                JOptionPane.showMessageDialog(null, "Error al eliminar categoría");
+                JOptionPane.showMessageDialog(null, "No Hay información para este dato");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione una categoria");

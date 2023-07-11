@@ -123,27 +123,51 @@ public class InterCliente extends javax.swing.JInternalFrame {
 
         Cliente cliente = new Cliente();
         Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+        String nombre_cliente=txt_nombre.getText().trim();
+        String apellido_cliente=txt_apellido.getText().trim();
+        String dni= txt_dni.getText().trim();
+        String telefono_cliente= txt_telefono.getText().trim();
+        String direccion_cliente= txt_direccion.getText().trim();
+        
 
         if (!txt_nombre.getText().isEmpty() && !txt_apellido.getText().isEmpty() && !txt_dni.getText().isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Correcto");
             if (!controlCliente.existeCliente(txt_dni.getText().trim())) {
-
+                
                 cliente.setNombre_cliente(txt_nombre.getText().trim());
                 cliente.setApellido_cliente(txt_apellido.getText().trim());
-                cliente.setDni_cliente(txt_dni.getText().trim());
-                cliente.setTelefono_cliente(txt_telefono.getText().trim());
+                if(validarCampo(dni, 8)){
+                cliente.setDni_cliente(dni); 
+                
+                if(validarCampo(telefono_cliente, 9)){
+                cliente.setTelefono_cliente(telefono_cliente);
                 cliente.setDireccion_cliente(txt_direccion.getText().trim());
                 cliente.setEstado(1);
 
                 if (controlCliente.guardar(cliente)) {
                     JOptionPane.showMessageDialog(null, "Registro guardado");
-                    txt_nombre.setBackground(Color.green);
-                    txt_apellido.setBackground(Color.green);
-                    txt_dni.setBackground(Color.green);
-                    txt_telefono.setBackground(Color.green);
-                    txt_direccion.setBackground(Color.green);
+                    this.Limpiar();
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar");
+                }
+                
+                }else{
+                    JOptionPane.showMessageDialog(null, "El campo Telefono esta incorrecto");
+                    this.Limpiar();
+                    txt_nombre.setText(nombre_cliente);
+                    txt_apellido.setText(apellido_cliente);
+                    txt_dni.setText(dni);
+                    txt_direccion.setText(direccion_cliente);
+                    txt_telefono.setBackground(Color.red);
+                }
+                /*Juan-----------------------------------------------------*/
+                }else{
+                    JOptionPane.showMessageDialog(null, "El campo DNI esta incorrecto");
+                    this.Limpiar();
+                    txt_nombre.setText(nombre_cliente);
+                    txt_apellido.setText(apellido_cliente);
+                    txt_telefono.setText(telefono_cliente);
+                    txt_direccion.setText(direccion_cliente);
+                    txt_dni.setBackground(Color.red);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "El cliente ya se encuentra registrado");
@@ -161,7 +185,7 @@ public class InterCliente extends javax.swing.JInternalFrame {
             txt_telefono.setBackground(Color.red);
             txt_direccion.setBackground(Color.red);
         }
-        this.Limpiar();
+        /*this.Limpiar();*/
 
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
@@ -190,6 +214,20 @@ public class InterCliente extends javax.swing.JInternalFrame {
         txt_dni.setText("");
         txt_telefono.setText("");
         txt_direccion.setText("");
+        txt_nombre.setBackground(Color.white);
+        txt_apellido.setBackground(Color.white);
+        txt_dni.setBackground(Color.white);
+        txt_telefono.setBackground(Color.white);
+        txt_direccion.setBackground(Color.white);
     }
 
+    /*Procedimeinto de Juan --Validar campo*/
+    public static boolean validarCampo(String dato, int n) {
+        if (dato.length() == n && dato.matches("\\d+")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }

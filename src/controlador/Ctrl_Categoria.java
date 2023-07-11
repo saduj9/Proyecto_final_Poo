@@ -92,4 +92,23 @@ public class Ctrl_Categoria {
         }
         return respuesta;
     }
+    
+    //metodo para verificar categoria existente con producto
+    public boolean existeProductoporCategoría(int categoria) {
+        boolean respuesta = false;
+        String sql = "select nombre_producto from tb_producto where idCategoria = '" + categoria + "';";
+        Statement st;
+
+        try {
+            Connection cn = conexion.Conexion.conectar();
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                respuesta = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al consultar la categoría" + e);
+        }
+        return respuesta;
+    }
 }
