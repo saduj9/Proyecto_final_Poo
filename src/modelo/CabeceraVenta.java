@@ -12,6 +12,7 @@ public class CabeceraVenta {
     
     private int idCabeceraventa;
     private int idCliente;
+    private int idUsuario;
     private double valorPagar;
     private String fechaVenta;
     private int estado;
@@ -24,9 +25,10 @@ public class CabeceraVenta {
         this.estado = 0;
     }
 
-    public CabeceraVenta(int idCabeceraventa, int idCliente, double valorPagar, String fechaVenta, int estado) {
+    public CabeceraVenta(int idCabeceraventa, int idCliente, int idUsuario, double valorPagar, String fechaVenta, int estado) {
         this.idCabeceraventa = idCabeceraventa;
         this.idCliente = idCliente;
+        this.idUsuario = idUsuario;
         this.valorPagar = valorPagar;
         this.fechaVenta = fechaVenta;
         this.estado = estado;
@@ -46,6 +48,14 @@ public class CabeceraVenta {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public double getValorPagar() {
@@ -71,6 +81,9 @@ public class CabeceraVenta {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    
+    
     
     
     
